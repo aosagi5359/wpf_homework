@@ -183,7 +183,6 @@ namespace _2023_WpfApp3
 
 ```
 # 詳細說明
-### ShapeButton_Click 是一個事件處理程序，當用戶按下不同形狀的按鈕時觸發。它會根據按鈕的 Tag 屬性來設定 shapeType 變數，以指定正在繪製的形狀類型。
 ```csharp
 private void ShapeButton_Click(object sender, RoutedEventArgs e)
 {
@@ -191,7 +190,104 @@ private void ShapeButton_Click(object sender, RoutedEventArgs e)
     shapeType = targetRadioButton.Tag.ToString();
 }
 ```
+ShapeButton_Click 是一個事件處理程序，當用戶按下不同形狀的按鈕時觸發。它會根據按鈕的 Tag 屬性來設定 shapeType 變數，以指定正在繪製的形狀類型。
 
+```csharp
+private void strokeColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            strokeColor = (Color)strokeColorPicker.SelectedColor; /
+        }
 
+```
+strokeColorPicker_SelectedColorChanged 是事件處理程序，當選擇筆刷顏色的選擇器值更改時觸發。它將 strokeColor 變數設定為所選顏色。
 
+```csharp
+private void thicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+{
+    strokeThickness = Convert.ToInt32(thicknessSlider.Value);
+}
+```
+thicknessSlider_ValueChanged 是事件處理程序，當筆刷粗細的滑塊值更改時觸發。它將 strokeThickness 變數設定為滑塊的值，並轉換為整數類型。
+
+```csharp
+private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+{
+    myCanvas.Cursor = Cursors.Cross;
+    start = e.GetPosition(myCanvas);
+    DisplayStatus();
+
+    if (shapeType == "Line")
+    {
+        currentShape = new Line
+        {
+            X1 = start.X,
+            Y1 = start.Y,
+            X2 = start.X,
+            Y2 = start.Y,
+            Stroke = new SolidColorBrush(strokeColor),
+            StrokeThickness = strokeThickness,
+        };
+        myCanvas.Children.Add(currentShape);
+    }
+    else if (shapeType == "Rectangle" || shapeType == "Ellipse")
+    {
+        currentShape = shapeType == "Rectangle" ? new Rectangle() : new Ellipse();
+        var shape = currentShape as Shape;
+        shape.Stroke = new SolidColorBrush(strokeColor);
+        shape.StrokeThickness = strokeThickness;
+        shape.Fill = new SolidColorBrush(fillColor);
+        Canvas.SetLeft(shape, start.X);
+        Canvas.SetTop(shape, start.Y);
+        myCanvas.Children.Add(currentShape);
+    }
+}
+```
+myCanvas_MouseLeftButtonDown 是事件處理程序，當用戶在畫布上按下滑鼠左鍵時觸發。它設定了畫筆的游標，記錄起始座標，然後根據 shapeType 變數創建適當的形狀，例如直線、矩形或橢圓。這些形狀以不同的方式設置，包括位置、顏色和粗細。
+
+```csharp
+private void myCanvas_MouseMove(object sender, MouseEventArgs e)
+{
+    dest = e.GetPosition(myCanvas);
+    DisplayStatus();
+
+    if (e.LeftButton == MouseButtonState.Pressed)
+    {
+        if (currentShape != null)
+        {
+            if (currentShape is Line line)
+            {
+                line.X2 = dest.X;
+                line.Y2 = dest.Y;
+            }
+            else if (currentShape is Shape shape)
+            {
+                double width = Math.Abs(dest.X - start.X);
+                double height = Math.Abs(dest.Y - start.Y);
+                Canvas.SetLeft(shape, Math.Min(start.X, dest.X));
+                Canvas.SetTop(shape, Math.Min(start.Y, dest.Y));
+                shape.Width = width;
+                shape.Height = height;
+            }
+        }
+    }
+}
+
+```
+myCanvas_MouseMove 是事件處理程序，當用戶在畫布上拖曳滑鼠時觸發。它會更新目標座標，並根據當前正在繪製的形狀更新其位置和大小。這包括直線的終點座標，以及矩形和橢圓的位置、寬度和高度。
+
+```csharp
+private void myCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+{
+    currentShape = null;
+}
+```
+myCanvas_MouseLeftButtonUp 是事件處理程序，當用戶釋放滑鼠左鍵時觸發。它將 currentShape 設置為 null，表示不再繪製形狀。
+
+```csharp
+private void fillColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+{
+    fillColor = (Color)fillColorPicker.SelectedColor;
+}
+```
+fillColorPicker_SelectedColorChanged 是事件處理程序，當選擇填充顏色的選擇器值更改時觸發。它將 fillColor 變數設定為所選顏色。
 
