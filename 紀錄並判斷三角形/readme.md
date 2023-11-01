@@ -115,93 +115,106 @@ namespace TriangleChecker
 }
 ```
 # 詳細說明
-```csharp
- private void CheckTriangleButton_Click(object sender, RoutedEventArgs e)
-        {
-            double side1, side2, side3;
+以下是您的程式碼和相關的說明內容，以Markdown格式：
 
-            if (!double.TryParse(side1TextBox.Text, out side1) ||
-                !double.TryParse(side2TextBox.Text, out side2) ||
-                !double.TryParse(side3TextBox.Text, out side3) ||
-                side1 <= 0 || side2 <= 0 || side3 <= 0)
-            {
-                MessageBox.Show("請輸入有效的正數邊長。");
-                return;
-            }
+# 1. 初始化程式
+
+```csharp
+private List<Triangle> triangles = new List<Triangle>();
+
+public MainWindow()
+{
+    InitializeComponent();
+}
 ```
-CheckTriangleButton_Click 是當使用者按下"檢查三角形"按鈕時觸發的事件處理程序。
 
-它試圖從三個文本框 (side1TextBox, side2TextBox, side3TextBox) 中讀取使用者輸入的三邊長。
+在這部分，您初始化了 `triangles` 列表以存儲三角形的資訊。這個程式看起來是一個 WPF 應用程式，主視窗的初始化和 UI 元素的設定發生在這裡。
 
-如果輸入無效（例如，不能成功轉換為 double 或小於等於0），則會顯示錯誤訊息並結束處理。
-
-```csharp
-            Triangle triangle = new Triangle(side1, side2, side3);
-            triangles.Add(triangle);
-
-            if (triangle.IsTriangle())
-            {
-                resultLabel.Content = $"邊長 {side1}, {side2}, {side3} 可構成三角形";
-                resultLabel.Background = Brushes.Green;
-            }
-            else
-            {
-                resultLabel.Content = $"邊長 {side1}, {side2}, {side3} 不可構成三角形";
-                resultLabel.Background = Brushes.Red;
-            }
-
-            UpdateTestResults();
-        }
-```
-在這個部分，程式建立一個 Triangle 物件，傳入三邊長的值，然後將此物件加入到 triangles 列表中。
-
-接著，它呼叫 IsTriangle 方法檢查是否可以構成一個有效的三角形，並根據結果更新 resultLabel 控制項的內容和背景色。
-
-最後，它呼叫 UpdateTestResults 方法，更新測試結果的文字區塊。
+# 2. 當"CheckTriangle"按鈕被點擊時
 
 ```csharp
-        private void UpdateTestResults()
-        {
-            testResultsTextBlock.Text = "測試結果：\n";
-            foreach (Triangle triangle in triangles)
-            {
-                testResultsTextBlock.Text += $"{triangle.ToString()}\n";
-            }
-        }
+private void CheckTriangleButton_Click(object sender, RoutedEventArgs e)
+{
+    double side1, side2, side3;
 
-```
-UpdateTestResults 方法更新測試結果的文字區塊 (testResultsTextBlock) 的內容。
-
-它遍歷 triangles 列表中的每個三角形物件，呼叫其 ToString 方法並將結果附加到文字區塊中。
-
-```csharp
- public class Triangle
+    // 檢查並獲取使用者輸入的三條邊長
+    if (!double.TryParse(side1TextBox.Text, out side1) ||
+        !double.TryParse(side2TextBox.Text, out side2) ||
+        !double.TryParse(side3TextBox.Text, out side3) ||
+        side1 <= 0 || side2 <= 0 || side3 <= 0)
     {
-        private double side1, side2, side3;
+        MessageBox.Show("請輸入有效的正數邊長。");
+        return;
+    }
 
-        public Triangle(double side1, double side2, double side3)
-        {
-            this.side1 = side1;
-            this.side2 = side2;
-            this.side3 = side3;
-        }
-  public bool IsTriangle()
-        {
-            return (side1 + side2 > side3) &&
-                   (side1 + side3 > side2) &&
-                   (side2 + side3 > side1);
-        }        
+    // 創建 Triangle 物件
+    Triangle triangle = new Triangle(side1, side2, side3);
+    triangles.Add(triangle);
+
+    // 檢查三條邊是否能構成三角形
+    if (triangle.IsTriangle())
+    {
+        resultLabel.Content = $"邊長 {side1}, {side2}, {side3} 可構成三角形";
+        resultLabel.Background = Brushes.Green;
+    }
+    else
+    {
+        resultLabel.Content = $"邊長 {side1, side2, side3} 不可構成三角形";
+        resultLabel.Background = Brushes.Red;
+    }
+
+    // 更新測試結果
+    UpdateTestResults();
+}
 ```
-Triangle 類別中的 IsTriangle 方法用於檢查三邊長是否可以構成一個有效的三角形。它檢查三角不等式是否成立，即任意兩邊之和必須大於第三邊。
+
+這個部分處理當 "CheckTriangle" 按鈕被點擊時的事件。它從使用者輸入獲取三條邊長，然後檢查是否可以構成三角形。如果可以，將結果顯示為綠色，否則顯示為紅色。然後，它呼叫 `UpdateTestResults` 函數，以更新測試結果。
+
+# 3. 更新測試結果
 
 ```csharp
-        public override string ToString()
-        {
-            return IsTriangle()
-                ? $"邊長 {side1}, {side2}, {side3} 可構成三角形"
-                : $"邊長 {side1}, {side2}, {side3} 不可構成三角形";
-        }
+private void UpdateTestResults()
+{
+    testResultsTextBlock.Text = "測試結果：\n";
+    foreach (Triangle triangle in triangles)
+    {
+        testResultsTextBlock.Text += $"{triangle.ToString()}\n";
     }
 }
 ```
-ToString 方法用於返回三角形的描述，如果三邊長可以構成三角形，它將返回描述 "邊長 ... 可構成三角形"，否則返回描述 "邊長 ... 不可構成三角形"。
+
+這個部分更新測試結果，將所有三角形的測試結果顯示在 `testResultsTextBlock` 文本塊中。
+
+# 4. Triangle 類別
+
+```csharp
+public class Triangle
+{
+    private double side1, side2, side3;
+
+    public Triangle(double side1, double side2, double side3)
+    {
+        this.side1 = side1;
+        this.side2 = side2;
+        this.side3 = side3;
+    }
+
+    public bool IsTriangle()
+    {
+        return (side1 + side2 > side3) &&
+               (side1 + side3 > side2) &&
+               (side2 + side3 > side1);
+    }
+
+    public override string ToString()
+    {
+        return IsTriangle()
+            ? $"邊長 {side1}, {side2}, {side3} 可構成三角形"
+            : $"邊長 {side1}, {side2}, {side3} 不可構成三角形";
+    }
+}
+```
+
+這個部分定義了 `Triangle` 類別，它表示一個三角形。這個類別具有檢查三條邊是否能構成三角形的 `IsTriangle` 方法，以及一個 `ToString` 方法，用於返回三角形的描述。如果三條邊能構成三角形，它將返回一個成功的描述，否則將返回一個失敗的描述。
+
+這個程式的功能是檢查使用者輸入的三條邊是否能構成三角形，並將結果以綠色或紅色顯示在 UI 中，同時記錄每次測試的結果。
