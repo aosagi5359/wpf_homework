@@ -1,0 +1,14 @@
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\bin\Debug\net6.0\Homework_Drink_ordering_system.exe
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\bin\Debug\net6.0\Homework_Drink_ordering_system.deps.json
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\bin\Debug\net6.0\Homework_Drink_ordering_system.runtimeconfig.json
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\bin\Debug\net6.0\Homework_Drink_ordering_system.dll
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\bin\Debug\net6.0\Homework_Drink_ordering_system.pdb
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\obj\Debug\net6.0\Homework_Drink_ordering_system.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\obj\Debug\net6.0\Homework_Drink_ordering_system.AssemblyInfoInputs.cache
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\obj\Debug\net6.0\Homework_Drink_ordering_system.AssemblyInfo.cs
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\obj\Debug\net6.0\Homework_Drink_ordering_system.csproj.CoreCompileInputs.cache
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\obj\Debug\net6.0\Homework_Drink_ordering_system.dll
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\obj\Debug\net6.0\refint\Homework_Drink_ordering_system.dll
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\obj\Debug\net6.0\Homework_Drink_ordering_system.pdb
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\obj\Debug\net6.0\Homework_Drink_ordering_system.genruntimeconfig.cache
+C:\Users\aosagi\source\repos\Homework_Drink_ordering_system\Homework_Drink_ordering_system\obj\Debug\net6.0\ref\Homework_Drink_ordering_system.dll

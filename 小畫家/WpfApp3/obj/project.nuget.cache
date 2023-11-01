@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "+4VUUck+cY/dacKFGWYj4Rd8/QKnh4uqdrymgu12rS79npzoqss7WnUc8wOD4EGqWMLmTH2cSucyq7uYx+i4vw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\aosagi\\source\\repos\\WpfApp3\\WpfApp3\\WpfApp3.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\aosagi\\.nuget\\packages\\extended.wpf.toolkit\\4.5.1\\extended.wpf.toolkit.4.5.1.nupkg.sha512"
+  ],
+  "logs": []
+}
