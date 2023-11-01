@@ -147,9 +147,7 @@ namespace Homework_Drink_ordering_system
 
 ```
 # 詳細說明
-當然，以下是您的程式碼和相應的說明內容，以Markdown格式：
 
-```markdown
 # 1. 初始化飲料清單和訂單，以及呼叫相關方法
 
 ```csharp
