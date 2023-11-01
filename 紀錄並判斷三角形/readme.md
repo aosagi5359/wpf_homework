@@ -115,7 +115,6 @@ namespace TriangleChecker
 }
 ```
 # 詳細說明
-以下是您的程式碼和相關的說明內容，以Markdown格式：
 
 # 1. 初始化程式
 
@@ -128,7 +127,7 @@ public MainWindow()
 }
 ```
 
-在這部分，您初始化了 `triangles` 列表以存儲三角形的資訊。這個程式看起來是一個 WPF 應用程式，主視窗的初始化和 UI 元素的設定發生在這裡。
+在這部分，初始化了 `triangles` 列表以存儲三角形的資訊。這個程式看起來是一個 WPF 應用程式，主視窗的初始化和 UI 元素的設定發生在這裡。
 
 # 2. 當"CheckTriangle"按鈕被點擊時
 
