@@ -50,53 +50,55 @@
 
 # MainWindow.xaml.cs
 ```csharp
-using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
+using System; // 引入 System 命名空间，其中包含了许多基本的类和功能
+using System.Linq; // 引入 LINQ 命名空间，用于查询集合
+using System.Windows; // 引入 WPF 中的 Window 类
+using System.Windows.Controls; // 引入 WPF 中的控件类
+using System.Windows.Input; // 引入 WPF 中的输入相关类
+using System.Windows.Media; // 引入 WPF 中的绘图和媒体类
+using System.Windows.Shapes; // 引入 WPF 中的形状类
 
 namespace _2023_WpfApp3
 {
     public partial class MainWindow : Window
     {
-        private string shapeType = "Line";
-        private Color strokeColor = Colors.Red;
-        private Color fillColor = Colors.Yellow;
-        private int strokeThickness = 1;
-        private Point start, dest;
-        private UIElement currentShape;
+        private string shapeType = "Line"; // 声明一个字符串变量 shapeType，用于存储当前图形类型，默认为 "Line"
+        private Color strokeColor = Colors.Red; // 声明一个 Color 类型的变量 strokeColor，用于存储线条颜色，默认为红色
+        private Color fillColor = Colors.Yellow; // 声明一个 Color 类型的变量 fillColor，用于存储填充颜色，默认为黄色
+        private int strokeThickness = 1; // 声明一个整数变量 strokeThickness，用于存储线条粗细，默认为 1
+        private Point start, dest; // 声明 Point 类型的变量 start 和 dest，用于存储绘图起始点和终止点
+        private UIElement currentShape; // 声明一个 UIElement 类型的变量 currentShape，用于存储当前绘制的形状
 
         public MainWindow()
         {
-            InitializeComponent();
-            strokeColorPicker.SelectedColor = strokeColor;
-            fillColorPicker.SelectedColor = fillColor;
+            InitializeComponent(); // 在构造函数中初始化窗口
+            strokeColorPicker.SelectedColor = strokeColor; // 设置颜色选择器的选定颜色为初始线条颜色
+            fillColorPicker.SelectedColor = fillColor; // 设置颜色选择器的选定颜色为初始填充颜色
         }
+
+        // 下面的方法处理事件和用户交互
 
         private void ShapeButton_Click(object sender, RoutedEventArgs e)
         {
             var targetRadioButton = sender as RadioButton;
-            shapeType = targetRadioButton.Tag.ToString();
+            shapeType = targetRadioButton.Tag.ToString(); // 当用户单击形状按钮时，更新当前图形类型
         }
 
         private void strokeColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
-            strokeColor = (Color)strokeColorPicker.SelectedColor;
+            strokeColor = (Color)strokeColorPicker.SelectedColor; // 当用户更改线条颜色时，更新线条颜色
         }
 
         private void thicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            strokeThickness = Convert.ToInt32(thicknessSlider.Value);
+            strokeThickness = Convert.ToInt32(thicknessSlider.Value); // 当用户更改线条粗细时，更新线条粗细
         }
 
         private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            myCanvas.Cursor = Cursors.Cross;
-            start = e.GetPosition(myCanvas);
-            DisplayStatus();
+            myCanvas.Cursor = Cursors.Cross; // 将鼠标光标设置为十字形
+            start = e.GetPosition(myCanvas); // 记录鼠标左键按下时的位置
+            DisplayStatus(); // 更新状态信息
 
             if (shapeType == "Line")
             {
@@ -109,7 +111,7 @@ namespace _2023_WpfApp3
                     Stroke = new SolidColorBrush(strokeColor),
                     StrokeThickness = strokeThickness,
                 };
-                myCanvas.Children.Add(currentShape);
+                myCanvas.Children.Add(currentShape); // 创建并添加线条到画布上
             }
             else if (shapeType == "Rectangle" || shapeType == "Ellipse")
             {
@@ -120,14 +122,14 @@ namespace _2023_WpfApp3
                 shape.Fill = new SolidColorBrush(fillColor);
                 Canvas.SetLeft(shape, start.X);
                 Canvas.SetTop(shape, start.Y);
-                myCanvas.Children.Add(currentShape);
+                myCanvas.Children.Add(currentShape); // 创建并添加矩形或椭圆到画布上
             }
         }
 
         private void myCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            dest = e.GetPosition(myCanvas);
-            DisplayStatus();
+            dest = e.GetPosition(myCanvas); // 记录鼠标移动时的位置
+            DisplayStatus(); // 更新状态信息
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -153,18 +155,18 @@ namespace _2023_WpfApp3
 
         private void myCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            currentShape = null;
+            currentShape = null; // 当鼠标左键释放时，清空当前形状
         }
 
         private void fillColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
-            fillColor = (Color)fillColorPicker.SelectedColor;
+            fillColor = (Color)fillColorPicker.SelectedColor; // 当用户更改填充颜色时，更新填充颜色
         }
 
         private void clearMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            myCanvas.Children.Clear();
-            DisplayStatus();
+            myCanvas.Children.Clear(); // 清空画布上的所有元素
+            DisplayStatus(); // 更新状态信息
         }
 
         private void DisplayStatus()
@@ -173,9 +175,21 @@ namespace _2023_WpfApp3
             int rectCount = myCanvas.Children.OfType<Rectangle>().Count();
             int ellipseCount = myCanvas.Children.OfType<Ellipse>().Count();
 
-            coordinateLabel.Content = $"座標點：({Math.Round(start.X)}, {Math.Round(start.Y)}) - ({Math.Round(dest.X)}, {Math.Round(dest.Y)})";
-            shapeLabel.Content = $"Line: {lineCount}, Rectangle: {rectCount}, Ellipse: {ellipseCount}";
+            coordinateLabel.Content = $"座標點：({Math.Round(start.X)}, {Math.Round(start.Y)}) - ({Math.Round(dest.X)}, {Math.Round(dest.Y)})"; // 更新坐标信息
+            shapeLabel.Content = $"Line: {lineCount}, Rectangle: {rectCount}, Ellipse: {ellipseCount}"; // 更新形状信息
         }
     }
 }
+
 ```
+# 詳細說明
+```csharp
+private void ShapeButton_Click(object sender, RoutedEventArgs e)
+{
+    var targetRadioButton = sender as RadioButton;
+    shapeType = targetRadioButton.Tag.ToString();
+}
+
+```
+ShapeButton_Click 是一個事件處理程序，當用戶按下不同形狀的按鈕時觸發。它會根據按鈕的 Tag 屬性來設定 shapeType 變數，以指定正在繪製的形狀類型。
+
