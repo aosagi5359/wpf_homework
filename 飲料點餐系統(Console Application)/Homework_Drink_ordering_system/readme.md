@@ -33,22 +33,28 @@ namespace Homework_Drink_ordering_system
     {
         private static void Main(string[] args)
         {
+            // 創建兩個空的 List，用於存儲飲料和訂單。
             List<Drink> drinks = new List<Drink>();
             List<OrderItem> orders = new List<OrderItem>();
 
+            // 呼叫以下幾個方法來初始化飲料清單、顯示菜單、下訂單、計算價格。
             AddNewDrink(drinks);
             DisplayDrinkMenu(drinks);
             PlaceOrder(orders, drinks);
             CountPrice(orders, drinks);
         }
 
+        // 計算總價格和折扣。
         private static void CountPrice(List<OrderItem> myOrders, List<Drink> myDrinks)
         {
             var total = 0.0;
             string message = "";
             double sellPrice = 0.0;
 
+            // 遍歷訂單中的每個項目，計算總價格。
             foreach (var orderitem in myOrders) total += orderitem.Subtotal;
+
+            // 根據總價格應用折扣。
             if (total >= 500)
             {
                 message = "滿500元以上8折";
@@ -70,11 +76,14 @@ namespace Homework_Drink_ordering_system
                 sellPrice = total;
             }
 
+            // 顯示訂單摘要。
             Console.WriteLine();
             Console.WriteLine($"您總共訂購{myOrders.Count}項飲料，總計{total}元。{message}，合計需付款{sellPrice}元。");
             Console.WriteLine("訂購完成，按任意鍵結束...");
             Console.ReadLine();
         }
+
+        // 輸入訂單。
         private static void PlaceOrder(List<OrderItem> myOrders, List<Drink> myDrinks)
         {
             Console.WriteLine("請開始訂購飲料，輸入N/n結束...");
@@ -108,6 +117,7 @@ namespace Homework_Drink_ordering_system
             }
         }
 
+        // 顯示飲料菜單。
         private static void DisplayDrinkMenu(List<Drink> myDrinks)
         {
             Console.WriteLine("飲料清單");
@@ -122,6 +132,7 @@ namespace Homework_Drink_ordering_system
             Console.WriteLine("----------------------------------");
         }
 
+        // 新增飲料到飲料清單。
         private static void AddNewDrink(List<Drink> myDrinks)
         {
             myDrinks.Add(new Drink() { Name = "咖啡", Size = "大杯", Price = 60 });
@@ -133,4 +144,5 @@ namespace Homework_Drink_ordering_system
         }
     }
 }
+
 ```
