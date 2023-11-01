@@ -53,11 +53,14 @@ namespace WpfApp2
         {
             InitializeComponent();
 
+            // 初始化飲料清單
             AddNewDrink(drinks);
 
+            // 顯示飲料清單
             DisplayDrinkMenu(drinks);
         }
 
+        // 顯示飲料菜單
         private void DisplayDrinkMenu(Dictionary<string, int> myDrinks)
         {
             foreach (var drink in myDrinks)
@@ -65,6 +68,7 @@ namespace WpfApp2
                 StackPanel sp = new StackPanel();
                 sp.Orientation = Orientation.Horizontal;
 
+                // 建立複選框 (CheckBox) 來選擇飲料項目
                 CheckBox cb = new CheckBox();
                 cb.Content = $"{drink.Key} : {drink.Value}元";
                 cb.Width = 200;
@@ -73,6 +77,7 @@ namespace WpfApp2
                 cb.Foreground = Brushes.Blue;
                 cb.Margin = new Thickness(5);
 
+                // 建立滑塊 (Slider) 來選擇數量
                 Slider sl = new Slider();
                 sl.Width = 100;
                 sl.Value = 0;
@@ -81,6 +86,7 @@ namespace WpfApp2
                 sl.VerticalAlignment = VerticalAlignment.Center;
                 sl.IsSnapToTickEnabled = true;
 
+                // 顯示選擇的數量
                 Label lb = new Label();
                 lb.Width = 50;
                 lb.Content = "0";
@@ -88,18 +94,22 @@ namespace WpfApp2
                 lb.FontSize = 18;
                 lb.Foreground = Brushes.Red;
 
+                // 加入 UI 元件到 StackPanel
                 sp.Children.Add(cb);
                 sp.Children.Add(sl);
                 sp.Children.Add(lb);
 
+                // 設定數量顯示的繫結 (Binding)
                 Binding myBinding = new Binding("Value");
                 myBinding.Source = sl;
                 lb.SetBinding(ContentProperty, myBinding);
 
+                // 將 StackPanel 加入到 UI 中的 stackpanel_DrinkMenu
                 stackpanel_DrinkMenu.Children.Add(sp);
             }
         }
 
+        // 從檔案中讀取飲料資訊並新增到清單中
         private void AddNewDrink(Dictionary<string, int> myDrinks)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
@@ -117,6 +127,8 @@ namespace WpfApp2
                 }
             }
         }
+
+        // 計算訂單總價
         private double CalculateTotalPrice()
         {
             double total = 0.0;
@@ -131,16 +143,20 @@ namespace WpfApp2
 
             return total;
         }
+
+        // 點擊"儲存訂單"按鈕時的事件處理函式
         private void SaveOrderButton_Click(object sender, RoutedEventArgs e)
         {
-
             SaveOrderToFile();
         }
+
+        // 儲存訂單到檔案
         private void SaveOrderToFile()
         {
             // 彈出儲存檔案對話方塊
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "文字檔案|*.txt";
+
             if (saveFileDialog.ShowDialog() == true)
             {
                 string filePath = saveFileDialog.FileName;
@@ -164,20 +180,26 @@ namespace WpfApp2
                         writer.WriteLine();
                         writer.WriteLine($"總計: {CalculateTotalPrice()}元");
                     }
+
+                    // 顯示儲存成功的訊息框
                     MessageBox.Show("訂單已成功儲存到檔案: " + filePath, "儲存成功", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
+                    // 顯示儲存失敗的訊息框
                     MessageBox.Show("儲存訂單時發生錯誤: " + ex.Message, "儲存錯誤", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
+
+        // 點擊"訂購"按鈕時的事件處理函式
         private void OrderButton_Click(object sender, RoutedEventArgs e)
         {
             PlaceOrder(orders);
             DisplayOrderDetail(orders);
         }
 
+        // 顯示訂單詳細資訊
         private void DisplayOrderDetail(Dictionary<string, int> myOrders)
         {
             displayTextBlock.Inlines.Clear();
@@ -236,6 +258,7 @@ namespace WpfApp2
             displayTextBlock.Inlines.Add(summaryTextBlock);
         }
 
+        // 建立訂單
         private void PlaceOrder(Dictionary<string, int> myOrders)
         {
             myOrders.Clear();
@@ -254,6 +277,7 @@ namespace WpfApp2
             }
         }
 
+        // 選擇外帶方式的事件處理函式
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             var rb = sender as RadioButton;
