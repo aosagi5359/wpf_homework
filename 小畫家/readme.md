@@ -183,6 +183,43 @@ namespace _2023_WpfApp3
 
 ```
 # 詳細說明
+
+```csharp
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
+
+namespace _2023_WpfApp3
+{
+    public partial class MainWindow : Window
+    {
+        private string shapeType = "Line";
+        private Color strokeColor = Colors.Red;
+        private Color fillColor = Colors.Yellow;
+        private int strokeThickness = 1;
+        private Point start, dest;
+        private UIElement currentShape;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            strokeColorPicker.SelectedColor = strokeColor;
+            fillColorPicker.SelectedColor = fillColor;
+        }
+```
+
+- `using` 指令引入必要的命名空間，這些命名空間包含了在WPF應用程式中使用的類別。
+
+- `public partial class MainWindow : Window` 建立了名為 `MainWindow` 的類別，它是一個WPF視窗應用程式的主視窗。在這個類別中，您可以定義視窗上的元素和事件處理程式。
+
+- 在這個類別中宣告了一些私有成員變數，用於存儲當前的形狀類型、畫筆顏色、填充顏色、筆刷粗細、起始座標、終點座標和當前正在畫的形狀。
+
+- `public MainWindow()` 是 MainWindow 類別的建構函式。在這個函式中，初始化視窗元素，設定畫筆顏色和填充顏色。
+
 ```csharp
 private void ShapeButton_Click(object sender, RoutedEventArgs e)
 {
@@ -190,16 +227,17 @@ private void ShapeButton_Click(object sender, RoutedEventArgs e)
     shapeType = targetRadioButton.Tag.ToString();
 }
 ```
-ShapeButton_Click 是一個事件處理程序，當用戶按下不同形狀的按鈕時觸發。它會根據按鈕的 Tag 屬性來設定 shapeType 變數，以指定正在繪製的形狀類型。
+
+- `ShapeButton_Click` 是一個事件處理程序，當用戶按下不同形狀的按鈕時觸發。它會根據按鈕的 `Tag` 屬性來設定 `shapeType` 變數，以指定正在繪製的形狀類型。
 
 ```csharp
 private void strokeColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-        {
-            strokeColor = (Color)strokeColorPicker.SelectedColor; /
-        }
-
+{
+    strokeColor = (Color)strokeColorPicker.SelectedColor;
+}
 ```
-strokeColorPicker_SelectedColorChanged 是事件處理程序，當選擇筆刷顏色的選擇器值更改時觸發。它將 strokeColor 變數設定為所選顏色。
+
+- `strokeColorPicker_SelectedColorChanged` 是事件處理程序，當選擇筆刷顏色的選擇器值更改時觸發。它將 `strokeColor` 變數設定為所選顏色。
 
 ```csharp
 private void thicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -207,7 +245,8 @@ private void thicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEv
     strokeThickness = Convert.ToInt32(thicknessSlider.Value);
 }
 ```
-thicknessSlider_ValueChanged 是事件處理程序，當筆刷粗細的滑塊值更改時觸發。它將 strokeThickness 變數設定為滑塊的值，並轉換為整數類型。
+
+- `thicknessSlider_ValueChanged` 是事件處理程序，當筆刷粗細的滑塊值更改時觸發。它將 `strokeThickness` 變數設定為滑塊的值，並轉換為整數類型。
 
 ```csharp
 private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -242,7 +281,8 @@ private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     }
 }
 ```
-myCanvas_MouseLeftButtonDown 是事件處理程序，當用戶在畫布上按下滑鼠左鍵時觸發。它設定了畫筆的游標，記錄起始座標，然後根據 shapeType 變數創建適當的形狀，例如直線、矩形或橢圓。這些形狀以不同的方式設置，包括位置、顏色和粗細。
+
+- `myCanvas_MouseLeftButtonDown` 是事件處理程序，當用戶在畫布上按下滑鼠左鍵時觸發。它設定了畫筆的游標，記錄起始座標，然後根據 `shapeType` 變數創建適當的形狀，例如直線、矩形或橢圓。這些形狀以不同的方式設置，包括位置、顏色和粗細。
 
 ```csharp
 private void myCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -271,17 +311,20 @@ private void myCanvas_MouseMove(object sender, MouseEventArgs e)
         }
     }
 }
-
 ```
-myCanvas_MouseMove 是事件處理程序，當用戶在畫布上拖曳滑鼠時觸發。它會更新目標座標，並根據當前正在繪製的形狀更新其位置和大小。這包括直線的終點座標，以及矩形和橢圓的位置、寬度和高度。
+
+- `myCanvas_MouseMove` 是事件處理程序，當用戶在畫布上拖曳滑鼠時觸發。它會更新目標座標，並根據當前正在繪製的形狀更新其位置和大小。這包括直線的終點座標，以及矩形和橢圓的位置、寬度和高度。
 
 ```csharp
 private void myCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 {
     currentShape = null;
 }
+
+
 ```
-myCanvas_MouseLeftButtonUp 是事件處理程序，當用戶釋放滑鼠左鍵時觸發。它將 currentShape 設置為 null，表示不再繪製形狀。
+
+- `myCanvas_MouseLeftButtonUp` 是事件處理程序，當用戶釋放滑鼠左鍵時觸發。它將 `currentShape` 設置為 `null`，表示不再繪製形狀。
 
 ```csharp
 private void fillColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
@@ -289,7 +332,8 @@ private void fillColorPicker_SelectedColorChanged(object sender, RoutedPropertyC
     fillColor = (Color)fillColorPicker.SelectedColor;
 }
 ```
-fillColorPicker_SelectedColorChanged 是事件處理程序，當選擇填充顏色的選擇器值更改時觸發。它將 fillColor 變數設定為所選顏色。
+
+- `fillColorPicker_SelectedColorChanged` 是事件處理程序，當選擇填充顏色的選擇器值更改時觸發。它將 `fillColor` 變數設定為所選顏色。
 
 ```csharp
 private void clearMenuItem_Click(object sender, RoutedEventArgs e)
@@ -298,7 +342,8 @@ private void clearMenuItem_Click(object sender, RoutedEventArgs e)
     DisplayStatus();
 }
 ```
-clearMenuItem_Click 是事件處理程序，當用戶選擇"清除"功能時觸發。它會清除畫布上的所有形狀，然後更新狀態標籤。
+
+- `clearMenuItem_Click` 是事件處理程序，當用戶選擇"清除"功能時觸發。它會清除畫布上的所有形狀，然後更新狀態標籤。
 
 ```csharp
 private void DisplayStatus()
@@ -310,6 +355,7 @@ private void DisplayStatus()
     coordinateLabel.Content = $"座標點：({Math.Round(start.X)}, {Math.Round(start.Y)}) - ({Math.Round(dest.X)}, {Math.Round(dest.Y)})";
     shapeLabel.Content = $"Line: {lineCount}, Rectangle: {rectCount}, Ellipse: {ellipseCount}";
 }
-
 ```
-DisplayStatus 是一個自定義方法，用於更新狀態標籤。它計算畫布上不同類型形狀的數量，並在標籤上顯示當前座標和形狀數量的訊息。
+
+- `DisplayStatus` 是一個自定義方法，用於更新狀態標籤。它計算畫布上不同類型形狀的數量，並在標籤上顯示當前座標和形狀數量的訊息。
+
