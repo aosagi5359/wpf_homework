@@ -291,3 +291,25 @@ private void fillColorPicker_SelectedColorChanged(object sender, RoutedPropertyC
 ```
 fillColorPicker_SelectedColorChanged 是事件處理程序，當選擇填充顏色的選擇器值更改時觸發。它將 fillColor 變數設定為所選顏色。
 
+```csharp
+private void clearMenuItem_Click(object sender, RoutedEventArgs e)
+{
+    myCanvas.Children.Clear();
+    DisplayStatus();
+}
+```
+clearMenuItem_Click 是事件處理程序，當用戶選擇"清除"功能時觸發。它會清除畫布上的所有形狀，然後更新狀態標籤。
+
+```csharp
+private void DisplayStatus()
+{
+    int lineCount = myCanvas.Children.OfType<Line>().Count();
+    int rectCount = myCanvas.Children.OfType<Rectangle>().Count();
+    int ellipseCount = myCanvas.Children.OfType<Ellipse>().Count();
+
+    coordinateLabel.Content = $"座標點：({Math.Round(start.X)}, {Math.Round(start.Y)}) - ({Math.Round(dest.X)}, {Math.Round(dest.Y)})";
+    shapeLabel.Content = $"Line: {lineCount}, Rectangle: {rectCount}, Ellipse: {ellipseCount}";
+}
+
+```
+DisplayStatus 是一個自定義方法，用於更新狀態標籤。它計算畫布上不同類型形狀的數量，並在標籤上顯示當前座標和形狀數量的訊息。
