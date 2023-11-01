@@ -183,7 +183,7 @@ namespace _2023_WpfApp3
 
 ```
 # 詳細說明
-## ShapeButton_Click 是一個事件處理程序，當用戶按下不同形狀的按鈕時觸發。它會根據按鈕的 Tag 屬性來設定 shapeType 變數，以指定正在繪製的形狀類型。
+### ShapeButton_Click 是一個事件處理程序，當用戶按下不同形狀的按鈕時觸發。它會根據按鈕的 Tag 屬性來設定 shapeType 變數，以指定正在繪製的形狀類型。
 ```csharp
 private void ShapeButton_Click(object sender, RoutedEventArgs e)
 {
