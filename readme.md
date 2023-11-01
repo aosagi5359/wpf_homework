@@ -286,3 +286,118 @@ namespace WpfApp2
     }
 }
 ```
+# 詳細說明
+### 初始化飲料清單和顯示飲料菜單
+
+```csharp
+Dictionary<string, int> drinks = new Dictionary<string, int>();
+Dictionary<string, int> orders = new Dictionary<string, int>();
+
+public MainWindow()
+{
+    InitializeComponent();
+
+    // 初始化飲料清單
+    AddNewDrink(drinks);
+
+    // 顯示飲料清單
+    DisplayDrinkMenu(drinks);
+}
+```
+
+在這個部分，你創建了兩個字典：`drinks` 用於存儲飲料名稱和價格，`orders` 用於存儲用戶的訂單。在 `MainWindow` 的建構函式中，你調用了 `AddNewDrink` 函式，它用於初始化 `drinks` 字典，然後呼叫 `DisplayDrinkMenu` 函式，以在應用程式的 UI 中顯示飲料菜單。
+
+### 顯示飲料菜單
+
+```csharp
+private void DisplayDrinkMenu(Dictionary<string, int> myDrinks)
+{
+    foreach (var drink in myDrinks)
+    {
+        StackPanel sp = new StackPanel();
+        sp.Orientation = Orientation.Horizontal;
+
+        CheckBox cb = new CheckBox();
+        cb.Content = $"{drink.Key} : {drink.Value}元";
+        // ...
+
+        // 建立 UI 元件，包括複選框 (CheckBox)、滑塊 (Slider) 和標籤 (Label)
+        // 將它們添加到 StackPanel，然後將 StackPanel 添加到 stackpanel_DrinkMenu。
+        // 這樣用戶就可以選擇飲料並指定數量。
+    }
+}
+```
+
+在這個部分，你創建了一個 `StackPanel` 用於包含飲料選項的 UI 元件。然後，你建立了一個 `CheckBox` 用於選擇飲料，以及一個 `Slider` 和 `Label` 來指定數量和顯示數量。最後，你將這些 UI 元件添加到 `StackPanel`，再將 `StackPanel` 添加到 `stackpanel_DrinkMenu`，這樣用戶就可以在應用程式中選擇飲料和數量。
+
+### 儲存訂單到檔案
+
+```csharp
+private void SaveOrderToFile()
+{
+    // 彈出儲存檔案對話方塊
+    SaveFileDialog saveFileDialog = new SaveFileDialog();
+    saveFileDialog.Filter = "文字檔案|*.txt";
+
+    if (saveFileDialog.ShowDialog() == true)
+    {
+        // 創建要儲存訂單的文字檔案，寫入訂單詳細資訊
+        // 包括品名、數量和小計，以及總價格。
+    }
+}
+```
+
+這個部分包括儲存訂單到檔案的邏輯。首先，你使用 `SaveFileDialog` 來彈出儲存檔案的對話方塊，讓用戶選擇儲存的檔案名稱和位置。然後，你將訂單詳細資訊寫入選擇的檔案，包括品名、數量和小計，以及總價格。如果儲存過程中出現錯誤，你會彈出錯誤訊息。
+
+### 顯示訂單詳細資訊
+
+```csharp
+private void DisplayOrderDetail(Dictionary<string, int> myOrders)
+{
+    // 清空現有的顯示內容
+    displayTextBlock.Inlines.Clear();
+
+    // 創建標題和顯示訂單內容，包括飲料品名、數量、小計和總價格。
+    // 也包括折扣信息和售價。
+}
+```
+
+這個部分負責顯示訂單的詳細資訊，包括已訂購的飲料、數量、小計、總價格和折扣信息。它首先清空 `displayTextBlock` 中的內容，然後建立一個標題和訂單內容，最後將它們添加到 `displayTextBlock` 以在應用程式中顯示。
+
+### 建立訂單
+
+```csharp
+private void PlaceOrder(Dictionary<string, int> myOrders)
+{
+    myOrders.Clear();
+    for (int i = 0; i < stackpanel_DrinkMenu.Children.Count; i++)
+    {
+        var sp = stackpanel_DrinkMenu.Children[i] as StackPanel;
+        var cb = sp.Children[0] as CheckBox;
+        var sl = sp.Children[1] as Slider;
+        string drinkName = cb.Content.ToString().Substring(0, cb.Content.ToString().IndexOf(':')).Trim();
+        int quantity = Convert.ToInt32(sl.Value);
+
+        if (cb.IsChecked == true && quantity != 0)
+        {
+            myOrders.Add(drinkName, quantity);
+        }
+    }
+}
+```
+
+這個部分負責建立訂單，它清空現有的訂
+
+單 (在 `myOrders` 字典中)，然後遍歷飲料清單中的每個選項。對於每個選項，它檢查是否已選中 (`cb.IsChecked == true`) 並且數量不為零 (`quantity != 0`)，如果是，則將該飲料和數量添加到訂單中。
+
+### 外帶方式的事件處理函式
+
+```csharp
+private void RadioButton_Checked(object sender, RoutedEventArgs e)
+{
+    var rb = sender as RadioButton;
+    if (rb.IsChecked == true) takeout = rb.Content.ToString();
+}
+```
+
+這個事件處理函式處理外帶方式的選擇。它檢查哪個選項被選中，然後將其值存儲在 `takeout` 變數中，以便在後續處理中使用。
